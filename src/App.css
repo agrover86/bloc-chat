@@ -28,6 +28,7 @@
 }
 
 .sideBar {
+    float: left;
     height: 100%; /* 100% Full-height */
     width: 20%; /* 100 width - change this with JavaScript */
     position: fixed; /* Stay in place */
@@ -37,4 +38,12 @@
     background-color: grey; /* grey*/
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
+}
+
+
+.messageWindow{
+  float: right;
+  height: 100%; /* 100% Full-height */
+  width: 80%; /* 100 width - change this with JavaScript */
+
 }

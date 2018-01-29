@@ -12,13 +12,6 @@ class RoomList extends Component {
     this.createRoom = this.createRoom.bind(this);
   }
 
-  componentDidMount() {
-     this.roomsRef.on('child_added', snapshot => {
-       const room = snapshot.val();
-       room.key = snapshot.key;
-       this.setState({ rooms: this.state.rooms.concat( room ) })
-     });
-   }
 
    handleChange(e){
       e.preventDefault();
@@ -31,17 +24,30 @@ class RoomList extends Component {
    this.setState({ newRoomName:''});
  }
 
+ selectRoom(room) {
+   this.props.activeRoom(room);
+ }
+
+
+ componentDidMount() {
+    this.roomsRef.on('child_added', snapshot => {
+      const room = snapshot.val();
+      room.key = snapshot.key;
+      this.setState({ rooms: this.state.rooms.concat( room ) })
+    });
+  }
+
 
   render() {
     return (
       <section className="chatRooms">
-        <form className="addChatRoom">
+          <form className="addChatRoom">
           <input type="text" value={this.state.newRoomName} placeholder="New Room" onChange={this.handleChange}/>
           <input type="submit" onClick={this.createRoom}/>
         </form>
         <div className="chatRoomsList">
            { this.state.rooms.map( (room) =>
-              <li key={room.key}>{room.name}</li>
+              <li key={room.key} onClick={(e)=>this.selectRoom(room,e)}>{room.name}</li>
            )}
         </div>
       </section>
