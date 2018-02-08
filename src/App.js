@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
+import User from './components/User';
 import './App.css';
 import * as firebase from 'firebase';
-
 
 // Initialize Firebase
 var config = {
@@ -19,23 +19,28 @@ firebase.initializeApp(config);
 class App extends Component {
   constructor(props) {
   super(props);
-  this.state = {activeRoom:''};
-  this.activeRoom = this.activeRoom.bind(this);
+  this.state = {activeRoom:'',userName:''};
+    this.activeRoom = this.activeRoom.bind(this);
+    this.setUser = this.setUser.bind(this);
 }
 
 activeRoom(room) {
   this.setState({activeRoom: room});
 }
 
+setUser(user){
+  this.setState({userName: user});
+}
 
   render() {
     return (
   <div className="container">
-    <div className="sideBar">
+        <div className="sideBar">
        <h1> Bloc Chat </h1>
        <RoomList firebase={firebase} activeRoom={this.activeRoom} />
     </div>
     <div className="messageWindow">
+       <User firebase={firebase} setUser={this.setUser} displayName={this.state.userName}/>
        <h1>{this.state.activeRoom.name ||'Select room'}</h1>
        <MessageList firebase={firebase} activeRoom={this.state.activeRoom.key}/>
     </div>
