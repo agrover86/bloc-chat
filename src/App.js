@@ -19,7 +19,7 @@ firebase.initializeApp(config);
 class App extends Component {
   constructor(props) {
   super(props);
-  this.state = {activeRoom:'',userName:''};
+  this.state = {activeRoom:'', user:null};
     this.activeRoom = this.activeRoom.bind(this);
     this.setUser = this.setUser.bind(this);
 }
@@ -29,7 +29,8 @@ activeRoom(room) {
 }
 
 setUser(user){
-  this.setState({userName: user});
+  this.setState({user: user});
+  console.log('setUserCalled this.state.user='+this.state.user);
 }
 
   render() {
@@ -40,7 +41,7 @@ setUser(user){
        <RoomList firebase={firebase} activeRoom={this.activeRoom} />
     </div>
     <div className="messageWindow">
-       <User firebase={firebase} setUser={this.setUser} displayName={this.state.userName}/>
+       <User firebase={firebase} setUser={this.setUser} user={this.state.user}/>
        <h1>{this.state.activeRoom.name ||'Select room'}</h1>
        <MessageList firebase={firebase} activeRoom={this.state.activeRoom.key}/>
     </div>

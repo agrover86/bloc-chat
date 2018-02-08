@@ -7,21 +7,20 @@ class User extends Component {
     this.signOut=this.signOut.bind(this);
   }
 
-  signIn(){
+  signIn(e){
+    e.preventDefault();
     const provider =  new this.props.firebase.auth.GoogleAuthProvider();
-    this.props.firebase.auth().signInWithPopup(provider).then((result) => {
-       const user = result.user;
-       this.props.setUser(user);
-
-    });
+    this.props.firebase.auth().signInWithPopup(provider);
   }
-  signOut(){
+  signOut(e){
+    e.preventDefault();
     this.props.firebase.auth().signOut();
+    this.props.setUser(null);
   }
 
   componentDidMount(){
     this.props.firebase.auth().onAuthStateChanged( user => {
-    this.props.setUser(user);
+      this.props.setUser(user);
     });
   }
 
@@ -33,7 +32,7 @@ class User extends Component {
           <button type="submit" onClick={this.signIn}>Sign In</button>
           <button type="submit" onClick={this.signOut}>Sign Out</button>
         </form>
-        <h4>{this.props.displayName}</h4>
+        <h4>{this.props.user==null?'Guest':this.props.user.displayName}</h4>
       </div>
     );
   }

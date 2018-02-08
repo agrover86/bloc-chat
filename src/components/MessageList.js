@@ -5,7 +5,7 @@ class MessageList extends Component {
   constructor(props) {
     super(props);
     this.state = {username: "", content: "", sentAt: "", RoomId:"",messages:[] } ;
-        this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
     this.handleContentChange = this.handleContentChange.bind(this);
     this.createMessage = this.createMessage.bind(this);
   }
