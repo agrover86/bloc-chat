@@ -41,9 +41,9 @@ setUser(user){
        <RoomList firebase={firebase} activeRoom={this.activeRoom} />
     </div>
     <div className="messageWindow">
-       <User firebase={firebase} setUser={this.setUser} user={this.state.user}/>
        <h1>{this.state.activeRoom.name ||'Select room'}</h1>
-       <MessageList firebase={firebase} activeRoom={this.state.activeRoom.key}/>
+       <User firebase={firebase} setUser={this.setUser} user={this.state.user}/>
+       <MessageList firebase={firebase} activeRoom={this.state.activeRoom.key} user={this.state.user}/>
     </div>
   </div>
     );

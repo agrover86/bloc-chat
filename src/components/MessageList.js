@@ -5,8 +5,7 @@ class MessageList extends Component {
   constructor(props) {
     super(props);
     this.state = {username: "", content: "", sentAt: "", RoomId:"",messages:[] } ;
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleContentChange = this.handleContentChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.createMessage = this.createMessage.bind(this);
   }
 
@@ -19,28 +18,25 @@ class MessageList extends Component {
     });
    }
 
-   handleNameChange(e){
-      e.preventDefault();
-      if( typeof this.props.activeRoom==='undefined'){
-        alert("Please select a room first");
-        return
-     }
-      this.setState({
-      username: e.target.value,
-      sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
-      RoomId: this.props.activeRoom
-    });
-   }
-   handleContentChange(e){
+
+   handleChange(e){
      e.preventDefault();
      if( typeof this.props.activeRoom==='undefined'){
        alert("Please select a room first");
        return
     }
-      e.preventDefault();
-      this.setState({
-      content: e.target.value,
-    });
+    else{
+        if(this.props.user!=null){
+          this.setState({username: this.props.user.displayName});
+         }
+        else{
+           this.setState({username: 'Guest'});
+         }
+        this.setState({
+          sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
+          RoomId: this.props.activeRoom,
+          content: e.target.value });
+    }
    }
 
 
@@ -61,10 +57,8 @@ render() {
   return (
     <section className="MessageList">
       <form className="addMessage">
-      <input type="text" value={this.state.username} placeholder="Display Name"
-       style={{width: '300px'}} onChange={this.handleNameChange}/>
         <input type="text" value={this.state.content} placeholder="Type message here"
-         style={{width: '300px', height:'200px'}} onChange={this.handleContentChange}/>
+         style={{width: '300px', height:'200px'}} onChange={this.handleChange}/>
         <button type="submit" onClick={this.createMessage}>Send</button>
       </form>
       <table className="MessageList">
